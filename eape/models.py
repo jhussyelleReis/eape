@@ -11,6 +11,7 @@ DIAPAGAMENTO = (('5','05'),('15','15'),('25','25'))
 
 TURNO = (('Manha',u'Manha'),('Tarde','Tarde'),('Noite','Noite'))
 
+STATUS = (('Presente',u'Presente'),('Ausente',u'Ausente'))
 
 class Aluno(models.Model):
     matricula = models.CharField(max_length=200)
@@ -48,6 +49,15 @@ class Pagamento(models.Model):
     turma = models.ForeignKey('Turma')
     data_realizacao = models.DateTimeField(blank=True, null=True) 
     valor = models.DecimalField(max_digits = 5 ,  decimal_places = 2 )
+
+    def __unicode__(self):
+        return self.data_realizacao
+
+class Frequencia(models.Model):
+    alunos = models.ManyToManyField('Aluno')
+    turma = models.ForeignKey('Turma')
+    data_realizacao = models.DateTimeField(blank=True, null=True) 
+    status = models.CharField(max_length=100, choices=STATUS)
 
     def __unicode__(self):
         return self.data_realizacao
